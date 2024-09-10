@@ -1,0 +1,113 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{jinstpub} 
+% for details on the use of the package, please
+% see the JINST-author-manual
+% https://jinst.sissa.it/jinst/help/JINST/TeXclass/jinst-author-manual.pdf
+
+\usepackage[numbers,sort&compress]{natbib}
+%\bibliographystyle{abbrvnat}
+\bibliographystyle{unsrtnat}
+
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{lineno}
+\usepackage{graphicx, subfigure}
+\linenumbers
+
+\usepackage{soul}
+\usepackage{color}
+\newcommand{\hlcyan}[1]{{\sethlcolor{cyan}\hl{#1}}}
+\newcommand{\hlgreen}[1]{{\sethlcolor{green}\hl{#1}}}
+\newcommand{\hlred}[1]{{\sethlcolor{red}\hl{#1}}}
+\newcommand{\hlblue}[1]{{\sethlcolor{blue}\hl{#1}}}
+\newcommand{\hlmag}[1]{{\sethlcolor{magenta}\hl{#1}}}
+
+\title{\boldmath Front-end Electronics for the DUNE Photon Detection System.}
+
+
+%% %simple case: 2 authors, same institution
+%% \author{A. Uthor}
+%% \author{and A. Nother Author}
+%% \affiliation{Institution,\\Address, Country}
+
+% more complex case: 4 authors, 3 institutions, 2 footnotes
+\author[a,b,1]{F. Irst,\note{Corresponding author.}}
+\author[c]{S. Econd,}
+\author[a,2]{T. Hird\note{Also at Some University.}}
+\author[c,2]{and Fourth}
+
+% The "\note" macro will give a warning: "Ignoring empty anchor..."
+% you can safely ignore it.
+
+\affiliation[a]{One University,\\some-street, Country}
+\affiliation[b]{Another University,\\different-address, Country}
+\affiliation[c]{A School for Advanced Studies,\\some-location, Country}
+
+% e-mail addresses: only for the corresponding author
+\emailAdd{first@one.univ}
+
+
+
+
+\abstract{Abstract...}
+
+
+
+\keywords{Only keywords from JINST's keywords list please}
+
+
+%\arxivnumber{1234.56789} % only if you have one
+
+
+% \collaboration{\includegraphics[height=17mm]{example-image}\\[6pt]
+%   XXX collaboration}
+% or
+\collaboration[c]{on behalf of the DUNE collaboration}
+% The opiton "c" will give a warning, but only so that you can
+% check that the output is what you expected
+
+% if you write for a special issue this may be useful
+%\proceeding{N$^{\text{th}}$ Workshop on X\\
+%  when\\
+%  where}
+
+
+
+\begin{document}
+\maketitle
+\flushbottom
+
+\input{Introduction.tex}
+
+\input{DAPHNE_System.tex}
+
+\input{DAPHNE_Interfaces.tex}
+
+\input{DAPHNE_Firmware.tex}
+
+\input{DAPHNE_DataSample.tex}
+
+\input{DAPHNE_testing.tex}
+
+\input{DAPHNE_ProtoDUNE_II.tex}
+
+\appendix
+
+\input{DAPHNE_Power_Consumption.tex}
+
+
+\acknowledgments
+
+This is the most common positions for acknowledgments. A macro is
+available to maintain the same layout and spelling of the heading.
+
+\paragraph{Note added.} This is also a good position for notes added
+after the paper has been written.
+
+\bibliography{DAPHNE_Bib}
+
+% We suggest to always provide author, title and journal data:
+% in short all the informations that clearly identify a doc
+
+\end{document}

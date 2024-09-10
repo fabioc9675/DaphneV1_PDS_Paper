@@ -1,0 +1,47 @@
+\section{Power Consumption}
+\label{sec:Power_Consumption}
+
+Using an FPGA power estimator tool, we have estimated that our FPGA will consume about 3.5 Watts and that our AFEs at about 150mW/channel and at 40 channels will consume about 6 Watts. Our cooling fan is estimated to consume about 1.6W of power as well. We estimate that our board will consume about 26 W total. 
+
+\subsection{Power Distribution: }
+
+To generate the bias voltage, a Cockcroft-Walton (CW) Generator is used. +/-10V is generated from the secondary winding of the main power transformer on DAPHNE. This voltage is then fed to the CW Generator . It is possible to choose what bias voltage will be generated. +34V, +45V, +55V, +66V, and +77V can all be chosen.
+\\*
+\\* Voltages generated for the FPGA are described below in the Power-on Sequence subsection. Voltages generated for the various op-amps are shown in the power distribution diagram. 
+
+\subsection{Power Connectors: }
+
+The DAPHNE board power distribution has similarities to the Mu2E CRV Front End Board. One of the similarities is that they both have a power barrel connector for bench top testing. 
+But DAPHNE also needs a different power connector. There are some options. A bulkhead connector, wires, mounted male connector and female mate could be used similar to the alternative to HDMI connectors described above. 
+Another option is to use a molex through hole connector with a center pin of 0.156”. Such connectors have been used on boards for CDMS and Mu2E.
+
+\subsection{Cooling Fan: }
+
+For a cooling fan we have decided to use a brushless axial ball bearing flow 5V fan, EFB0405VHD-F00, by Delta Electronics.  We will use a 3 pin connector to connect to the fan: +5V, GND, and Frequency Generator (FG). The FG produces a square wave signal with a frequency that is proportional to the fan speed. This signal is sent to the microcontroller and can allow for detection of low supply voltage or blocked airflow. The use of this function will be optional, and programming will be needed within the microcontroller. 
+This fan also includes a surface mount fuse rated for 500mA, 0154.500DR. For now, the plan is to keep the fan constantly turned on once plugged in. This fan has a life expectancy of about 70,000 hours (7.99 years) under continuous operation at 104° F (40°C). 
+
+
+\subsection{FPGA Power-on Sequence: }
+
+The recommended power-on sequence to achieve minimum current draw for the GTP transceivers is:
+\\*
+\\*VCCINT (1V) – Internal Supply Voltage
+\\*VCCBRAM (1V) – Supply Voltage for block RAM memories
+\\*VMGTAVCC (1V) – Analog Supply for the GTP circuits
+\\*VMGTAVTT (1.2V) – Analog Supply for the GTP termination circuits
+\\*VCCAUX (1.8V) – Auxiliary Supply Voltage
+\\*VCCO (2.5V, 3.3V)– Output Drivers Supply Voltage For I/O Banks
+\\*
+\\*Both VMGTAVCC and VCCINT can be ramped simultaneously. The recommended
+power-off sequence is the reverse of the power-on sequence to achieve minimum current draw. The reason for using a linear regulator for  MGTAVCC is because it is very sensitive to noise.
+\\*
+\\*In the NEXYS video schematic, which uses the same FPGA, an input of 12V is used. In our case we will be using an input of about 8V (same as from Sten’s Mu2E FEB power scheme). 
+\\*
+\\*The three devices that power the FPGA are the:
+ ADP2325 which supplies 1V(5A) and 2.5V(500mA)
+LTC3868 which supplies 1.8V(5A) and 3.3V(3.5A)
+TPS7A91 which supplies 1V(1A) and 1.2V(1A). 
+The 1V is for VMGTAVCC and the  1.2V is for VMGTAVTT, both required for the GTP transceiver. VMGTAVCC is the Analog supply voltage for the GTP transmitter and receiver circuits. VMGTAVTT is the Analog supply voltage for the GTP transmitter and receiver termination circuits. 
+\\*
+\\*No external device is used to create this sequence. 
+The sequencing is done using the enable pins on the voltage regulators. And all of these voltages except VMGTAVTT and VMGTAVCC have a ramp time of 8ms.
